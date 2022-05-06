@@ -13,7 +13,12 @@ class HorseForm extends React.Component<HorseFormProps> {
     render() {
         return(
             <div className="mb-3">
-                <label htmlFor="locationInput" className="form-label">Horse Name</label>
+                <label htmlFor="locationInput" className="form-label">
+                    <p className="mb-0">
+                        Horse Name
+                        <span className="ms-2 text-muted"><i>Required, 1-64</i></span>
+                    </p>
+                </label>
                 <input type="text" className="form-control" id="locationInput"
                 onChange={(e) => this.props.handleUpdate(e.target.value)}/>
             </div>
@@ -69,7 +74,6 @@ class RaceCreate extends React.Component<RaceCreateProps, RaceCreateState> {
 
     async submitRace(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        let result;
         try {
             let data: IRace = { 
                 id: null,
@@ -78,10 +82,11 @@ class RaceCreate extends React.Component<RaceCreateProps, RaceCreateState> {
                 location: this.state.location,
                 horses: this.state.horses
             }
-            result = await HTTPClient.post("/Race", data);
+            await HTTPClient.post("/Race", data);
         }
         catch (e) {
             alert(e);
+            return;
         }
         this.props.navigate("/");
     }
@@ -92,17 +97,30 @@ class RaceCreate extends React.Component<RaceCreateProps, RaceCreateState> {
                 <h3>Create New Race</h3>
                 <hr></hr>
                 <div className="mb-3">
-                    <label htmlFor="raceNameInput" className="form-label">Race Name</label>
+                    <label htmlFor="raceNameInput" className="form-label form-inline">
+                        <p className="mb-0">
+                            Race Name
+                            <span className="ms-2 text-muted"><i>Required, 0-64</i></span>
+                        </p>
+                    </label>
                     <input type="text" className="form-control" id="raceNameInput"
                     onChange={(e) => {this.setState({ name : e.target.value})}}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="locationInput" className="form-label">Location</label>
+                    <label htmlFor="locationInput" className="form-label">
+                        <p className="mb-0">
+                            Location  
+                            <span className="ms-2 text-muted"><i>Required, 0-128</i></span>
+                        </p>
+                    </label>
                     <input type="text" className="form-control" id="locationInput"
                     onChange={(e) => {this.setState({ location : e.target.value})}}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="dateInput" className="form-label">Time</label>
+                    <p className="mb-0">
+                        Time    
+                        <span className="ms-2 text-muted"><i>Required</i></span>
+                    </p>
                     <input type="datetime-local" className="form-control" id="dateInput"
                     onChange={(e) => {this.setState({ time : new Date(e.target.value)})}}/>
                 </div>

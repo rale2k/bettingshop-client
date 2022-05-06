@@ -9,6 +9,7 @@ import RaceCreate from './components/RaceCreate';
 import RaceList from './components/RaceList';
 import RaceDetails from './components/RaceDetails';
 import IUser from './domain/IUser';
+import Guide from './components/Guide';
 
 interface AppState {
     user: IUser | null
@@ -41,6 +42,7 @@ class App extends React.Component<any, AppState> {
                     <Route path="/*" element={ <RaceList /> } />
                     <Route path="create" element={ <RaceCreate />} />
                     <Route path="details/:raceId" element={ <RaceDetails user={this.state.user}/> } />
+                    <Route path="guide" element={ <Guide />} />
                 </Routes>
             </main>
         </div>

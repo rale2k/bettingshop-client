@@ -26,12 +26,10 @@ class Header extends React.Component<HeaderProps, HeaderState> {
 
     async login(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-
-        let result;
         try {
             let data: object = { name: this.state.username! };
 
-            result = await HTTPClient.post("/User/Login", data);
+            let result = await HTTPClient.post("/User/Login", data);
             this.props.handleLogon((result.data as IUser))
         }
         catch (e) {
@@ -42,7 +40,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     authNav() {
         if (this.props.user != null) {
             return (
-                <div className="col-md-9 d-flex justify-content-lg-end justify-content-center">
+                <div className="col-md-5 d-flex justify-content-lg-end justify-content-center">
                     <a className="nav-link link-dark">
                         Hello, {this.props.user.name}!
                     </a>
@@ -50,7 +48,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             );
         }
         return(
-            <div className="col-md-9 d-flex justify-content-lg-end justify-content-center">
+            <div className="col-md-5 d-flex justify-content-lg-end justify-content-center">
                 <div>
                     <a href="#" className="nav-link link-dark dropdown dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         Login
@@ -58,7 +56,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <form className="container" onSubmit={this.login} noValidate>
                             <div className="mb-3">
-                                <label htmlFor="userNameInput" className="form-label">Username</label>
+                                <label htmlFor="userNameInput" className="form-label">  
+                                    <p className="mb-0">
+                                        Username
+                                        <span className="ms-2 text-muted"><i>Required, 1-64</i></span>
+                                    </p>
+                                </label>
                                 <input type="email" className="form-control" id="userNameInput" 
                                 onChange={(e) => {this.setState({ username : e.target.value})}}/>
                             </div>
@@ -84,6 +87,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                         <Link className="col-md-2 nav-link link-dark" to="/create">
                             Create New Race
                         </Link>
+                        <Link className="col-md-2 nav-link link-dark" to="/guide">
+                            Guide
+                        </Link>
+                        <a className="col-md-2 nav-link link-dark" href="https://bettingshop-api.herokuapp.com/swagger/index.html">
+                            API Reference
+                        </a>
                         { this.authNav() }
                     </nav>
                 </div>
